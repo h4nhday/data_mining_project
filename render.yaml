@@ -1,28 +1,9 @@
-<<<<<<< HEAD
 services:
   - type: web
-    name: nhom4-data-service
+    name: data-mining-database-setup
     env: python
-    region: singapore
-    plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: python upload_to_mongodb.py
+    startCommand: python database_setup.py
     envVars:
       - key: MONGODB_URI
-        value: mongodb://localhost:27017/data_mining_project
-    healthCheckPath: /
-=======
-services:
-  - type: web
-    name: nhom4-data-service
-    env: python
-    region: singapore
-    plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: python upload_to_mongodb.py
-    envVars:
-      - key: MONGODB_URI
-        value: mongodb://localhost:27017/data_mining_project
-    healthCheckPath: /
->>>>>>> 83c11e3f93abca32751558185606acd85212875e
-    autoDeploy: true 
+        sync: false 
