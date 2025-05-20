@@ -9,16 +9,19 @@ from datetime import datetime
 def connect_mongodb():
     """Kết nối đến MongoDB và trả về client"""
     try:
-        # Lấy connection string từ biến môi trường
-        connection_string = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/data_mining_project')
-        client = MongoClient(connection_string)
+        # Thử kết nối với MongoDB local
+        connection_string = 'mongodb://localhost:27017/data_mining_project'
+        client = MongoClient(connection_string, serverSelectionTimeoutMS=5000)
+        
         # Kiểm tra kết nối
         client.admin.command('ping')
         print("✅ Kết nối MongoDB thành công!")
         return client
     except Exception as e:
         print(f"❌ Lỗi kết nối MongoDB: {e}")
-        return None
+        print("⚠️ Đang thử kết nối lại sau 5 giây...")
+        time.sleep(5)
+        return connect_mongodb()  # Thử kết nối lại
 
 def create_user_collection(client):
     """Tạo collection users với schema cơ bản và dữ liệu mẫu"""

@@ -2,8 +2,12 @@ services:
   - type: web
     name: data-mining-database-setup
     env: python
+    region: singapore
+    plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: python database_setup.py
     envVars:
       - key: MONGODB_URI
-        sync: false 
+        value: mongodb://localhost:27017/data_mining_project
+    healthCheckPath: /
+    autoDeploy: true 
